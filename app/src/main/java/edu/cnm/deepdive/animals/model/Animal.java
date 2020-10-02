@@ -17,6 +17,7 @@ public class Animal {
   private String lifespan;
 
   @SerializedName("image")
+
   private String imageUrl;
 
   public String getName() {
