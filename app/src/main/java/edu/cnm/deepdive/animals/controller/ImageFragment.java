@@ -62,6 +62,7 @@ public class ImageFragment extends Fragment {
       Gson gson = new GsonBuilder()
 
           .create();
+      //
 
       Retrofit retrofit = new Retrofit.Builder()
           .baseUrl("https://us-central1-apis-4674e.cloudfunctions.net/")
