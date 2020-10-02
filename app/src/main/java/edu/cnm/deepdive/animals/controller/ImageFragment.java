@@ -94,7 +94,7 @@ public class ImageFragment extends Fragment {
         Log.e("AnimalsService", e.getMessage(), e);
       }
 
-
+//
     }
 
 
