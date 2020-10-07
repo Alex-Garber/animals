@@ -1,5 +1,11 @@
 apply plugin: 'com.android.application'
 
+def getProperty(String propertyFile, String propertyName){
+    Properties properties = new Properties();
+    properties.load(new FileInputStream(propertyFile));
+    return String.format("\"%s\"", properties.getProperty(propertyName));
+}
+
 android {
 
     compileSdkVersion 29
@@ -13,6 +19,7 @@ android {
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        buildConfigField "String", "BASE_URL", getProperty("$projectDir/../../../services/animals.properties", "base_url")
     }
 
     buildTypes {
