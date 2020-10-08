@@ -1,8 +1,12 @@
 package edu.cnm.deepdive.animals.model;
 
+import com.google.gson.annotations.Expose;
+
 public class Apikey {
 
+@Expose
   private String message;
+@Expose
   private String key;
 
   public String getMessage() {
