@@ -64,7 +64,7 @@ public class ImageFragment extends Fragment implements OnItemSelectedListener {
       public void onChanged(List<Animal> animals) {
         ImageFragment.this.animals = animals;
         ArrayAdapter<Animal> adapter = new ArrayAdapter<>(
-            ImageFragment.this.getContext(), android.R.layout.simple_spinner_item,animals);
+            ImageFragment.this.getContext(),R.layout.custom_spinner_item,animals);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
         contentView.loadUrl(animals.get(32).getImageUrl());
