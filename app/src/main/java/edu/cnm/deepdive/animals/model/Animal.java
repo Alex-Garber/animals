@@ -1,5 +1,6 @@
 package edu.cnm.deepdive.animals.model;
 
+import androidx.annotation.NonNull;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
@@ -73,7 +74,15 @@ public class Animal {
     return imageUrl;
   }
 
+  @NonNull
+  @Override
+  public String toString() {
+    return getName();
+  }
+
   public void setImageUrl(String imageUrl) {
     this.imageUrl = imageUrl;
+
   }
+
 }
