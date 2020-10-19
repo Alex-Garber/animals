@@ -4,6 +4,7 @@
   android:layout_height="wrap_content"
   android:textSize="@dimen/spinner_size"
   android:padding="@dimen/generic_padding"
-  android:textColor="@color/deepPurple"
+  android:textStyle="bold|italic"
+  android:textColor="@color/white"
   >
 </TextView>

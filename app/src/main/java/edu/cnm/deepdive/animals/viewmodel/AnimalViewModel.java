@@ -25,12 +25,14 @@ public class AnimalViewModel extends AndroidViewModel {
 
   private final MutableLiveData<List<Animal>> animals;
   private final MutableLiveData<Throwable> throwable;
+  private final MutableLiveData<Integer> selectedItem;
   private final AnimalService animalService;
 
   public AnimalViewModel(
       @NonNull Application application) {
     super(application);
     animals = new MutableLiveData<>();
+    selectedItem = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
     animalService = AnimalService.getInstance();
     loadAnimals();
@@ -38,6 +40,13 @@ public class AnimalViewModel extends AndroidViewModel {
 
   public LiveData<List<Animal>> getAnimals() {
     return animals;
+  }
+
+  public LiveData<Integer> getSelectedItem() {
+    return selectedItem;
+  }
+  public void select(int index){
+    selectedItem.setValue(index);
   }
 
   public LiveData<Throwable> getThrowable() {
