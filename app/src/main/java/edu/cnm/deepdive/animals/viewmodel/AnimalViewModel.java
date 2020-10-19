@@ -40,11 +40,11 @@ public class AnimalViewModel extends AndroidViewModel {
     return animals;
   }
 
-  public MutableLiveData<Throwable> getThrowable() {
+  public LiveData<Throwable> getThrowable() {
     return throwable;
   }
 
-  @SuppressLint("StaticFieldLeak")
+  @SuppressLint("CheckResult")
   private void loadAnimals() {
 
     animalService.getApiKey()
