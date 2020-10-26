@@ -6,14 +6,18 @@ import android.os.AsyncTask;
 import android.util.Log;
 import androidx.annotation.NonNull;
 import androidx.lifecycle.AndroidViewModel;
+import androidx.lifecycle.Lifecycle.Event;
 import androidx.lifecycle.LiveData;
 import androidx.lifecycle.MutableLiveData;
+import androidx.lifecycle.OnLifecycleEvent;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import edu.cnm.deepdive.animals.BuildConfig;
 import edu.cnm.deepdive.animals.model.Animal;
 import edu.cnm.deepdive.animals.model.Apikey;
 import edu.cnm.deepdive.animals.service.AnimalService;
+import edu.cnm.deepdive.animals.service.AnimalsRepository;
+import io.reactivex.disposables.CompositeDisposable;
 import io.reactivex.schedulers.Schedulers;
 import java.io.IOException;
 import java.util.List;
@@ -26,7 +30,8 @@ public class AnimalViewModel extends AndroidViewModel {
   private final MutableLiveData<List<Animal>> animals;
   private final MutableLiveData<Throwable> throwable;
   private final MutableLiveData<Integer> selectedItem;
-  private final AnimalService animalService;
+  private final AnimalsRepository animalsRepository;
+  private final CompositeDisposable pending;
 
   public AnimalViewModel(
       @NonNull Application application) {
@@ -34,7 +39,9 @@ public class AnimalViewModel extends AndroidViewModel {
     animals = new MutableLiveData<>();
     selectedItem = new MutableLiveData<>();
     throwable = new MutableLiveData<>();
-    animalService = AnimalService.getInstance();
+    //animalService = AnimalService.getInstance();
+    animalsRepository = new AnimalsRepository(application);
+    pending = new CompositeDisposable();
     loadAnimals();
   }
 
@@ -55,13 +62,16 @@ public class AnimalViewModel extends AndroidViewModel {
 
   @SuppressLint("CheckResult")
   private void loadAnimals() {
-
-    animalService.getApiKey()
-        .subscribeOn(Schedulers.io())
-        .flatMap((key) -> animalService.getAnimals(key.getKey()))
+    pending.add(
+      animalsRepository.loadAnimals()
         .subscribe(
             animals::postValue,
             throwable::postValue
+        )
         );
+  }
+  @OnLifecycleEvent(Event.ON_STOP)
+  private void clearPending(){
+    pending.clear();
   }
 }
